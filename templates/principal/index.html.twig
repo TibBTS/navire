@@ -6,11 +6,6 @@
  
 {% block body %}
     {% include 'elements/navbar.html.twig' %}
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success">
-			{{ message }}
-		</div>
-	{% endfor %}
 	<script type="text/javascript" src="https://www.vesselfinder.com/aismap.js"></script>
 {% endblock %}
  
