@@ -11,8 +11,6 @@ class PrincipalController extends AbstractController
     #[Route('/', name: 'app_principal')]
     public function index(): Response
     {
-        
-        
         return $this->render('principal/index.html.twig', [
             'controller_name' => 'PrincipalController',
         ]);
