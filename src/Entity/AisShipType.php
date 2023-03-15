@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AisShipTypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table (name :'aisshiptype')]
@@ -29,6 +31,14 @@ class AisShipType
     #[ORM\Column(name:'libelle',length: 60)]
     private ?string $libelle = null;
 
+    #[ORM\ManyToMany(targetEntity: Port::class, mappedBy: 'idaisshiptype')]
+    private Collection $idport;
+
+    public function __construct()
+    {
+        $this->idport = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,6 +64,33 @@ class AisShipType
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Port>
+     */
+    public function getIdport(): Collection
+    {
+        return $this->idport;
+    }
+
+    public function addIdport(Port $idport): self
+    {
+        if (!$this->idport->contains($idport)) {
+            $this->idport->add($idport);
+            $idport->addIdaisshiptype($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdport(Port $idport): self
+    {
+        if ($this->idport->removeElement($idport)) {
+            $idport->removeIdaisshiptype($this);
+        }
 
         return $this;
     }
